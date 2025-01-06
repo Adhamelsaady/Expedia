@@ -5,7 +5,7 @@ namespace Expedia
 {
     internal class User
     {
-        string _email , _firstName , _LastName , _phoneNumber , _passportId , _emergencyContact;
+        string _email , _firstName , _LastName , _phoneNumber , _passportId , _emergencyContact , _password;
         DateTime _birthDate;
         bool _male;
         long _systemId;
@@ -20,11 +20,13 @@ namespace Expedia
         {
             get { return _systemId; }
         }
+
         public User()
         {
             
         }
-        public User(string email, string firstName, string LastName, string phoneNumber, string emergencyContact,DateTime birthDate, bool male , int systemID)
+
+        public User(string email, string firstName, string LastName, string phoneNumber, string emergencyContact,DateTime birthDate, bool male , int systemID , string password)
         {
             _email = email;
             _firstName = firstName;
@@ -34,6 +36,7 @@ namespace Expedia
             _birthDate = birthDate;  
             _male = male;
             _systemId = systemID;
+            _password = password;
         }
 
         public string data()
@@ -54,10 +57,17 @@ namespace Expedia
             Data += HelperMethods.DateTimeYearOnly(_birthDate);
             Data += '|';
             Data += _male;
+            Data += '|';
+            Data += _password;
 
             return Data;
         } 
 
+
+        public bool isVaild(string email , string password)
+        {
+            return email == _email && password == _password;
+        }
 
     }
 }

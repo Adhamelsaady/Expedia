@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
+using System.Security.Cryptography;
 using System.IO;
 namespace Expedia
 {
@@ -11,22 +11,42 @@ namespace Expedia
        
         public List <User> _SystemUsers = new List <User> ();
 
+
+
+        private bool UserExsit(string email , string password)
+        {
+            // iterating over the users and validating if any of them matches with the given email and password
+            foreach (User user in _SystemUsers)
+            {
+                if(user.isVaild(email, password))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         void LoadUserDataBase()
         {
-            _SystemUsers.Clear();
+            // This method loads the data in the file to the _SystemUsers list
+
+            if(_SystemUsers.Count != 0)
+                _SystemUsers.Clear();
             using (StreamReader reader = new StreamReader(USERS_FILE_PATH))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    _SystemUsers.Add(HelperMethods.MakeUser(line));
+                    _SystemUsers.Add(HelperMethods.DataToUser(line));
                 }
             }
         }
 
         void UpdateUserDataBase()
         {
-            using (StreamWriter writer = new StreamWriter(USERS_FILE_PATH , true))
+            // This method add the data in the list to the file , after deleting all the data in the other file 
+
+            using (StreamWriter writer = new StreamWriter(USERS_FILE_PATH , false))
             {
                 foreach (var user in _SystemUsers)
                 {
@@ -35,140 +55,37 @@ namespace Expedia
             }
         }
 
-        private string GetEmail()
+        private string GetValidatedInput(string message, Func<string, bool> validate, string errorMessage)
         {
-            string email = HelperMethods.GetStringInput(HelperMethods.MAIL_MESSAGE);
-            bool IsValidEmail = HelperMethods.ValidateEmail(email) && (_SystemUsers.Exists(user => user.Email == email) == false);
+            // The method prompts the user for input, validates it using a provided validation function,
+            // and repeats the process until valid input is entered. 
 
-            // Validating the email taken by the user , using some helper methods
-            while (!IsValidEmail)
+            string input = HelperMethods.GetStringInput(message);
+            while (!validate(input))
             {
-                if (_SystemUsers.Exists(user => user.Email == email))
-                {
-                    Console.WriteLine("This email already exsits\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                }
-                else
-                {
-                    Console.WriteLine("The email is invalid.\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                }
-
-                short _Option;
-                _Option = short.Parse(Console.ReadLine());
-                if (_Option == 1)
-                {
-                    email = HelperMethods.GetStringInput(HelperMethods.MAIL_MESSAGE);
-                    IsValidEmail = (HelperMethods.ValidateEmail(email) && (_SystemUsers.Exists(user => user.Email == email) == false));
-                }
-                else
-                {
-                    return "!";
-                }
+                Console.WriteLine(errorMessage + "\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char option = char.Parse(Console.ReadLine());
+                if (option != '1') return "!";
+                input = HelperMethods.GetStringInput(message);
             }
-            return email;
-        }
-
-        private string GetFirstName()
-        {
-
-            string firstName = HelperMethods.GetStringInput(HelperMethods.FIRST_NAME_MESSAGE);
-            bool isValidName = HelperMethods.ValidateName(firstName);
-            while (!isValidName)
-            {
-                Console.WriteLine("The first name is invalid.\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                short _Option;
-                _Option = short.Parse(Console.ReadLine());
-                if (_Option == 1)
-                {
-                    firstName = HelperMethods.GetStringInput(HelperMethods.FIRST_NAME_MESSAGE);
-                    isValidName = HelperMethods.ValidateName(firstName);
-                }
-                else
-                {
-                    return "!";
-                }
-            }
-            return firstName;
-        }
-
-        private string GetLastName()
-        {
-            string secondName = HelperMethods.GetStringInput(HelperMethods.SECOND_NAME_MESSAGE);
-            bool isValidName = HelperMethods.ValidateName(secondName);
-            while (!isValidName)
-            {
-                Console.WriteLine("The second name is invalid.\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                short _Option;
-                _Option = short.Parse(Console.ReadLine());
-                if (_Option == 1)
-                {
-                    secondName = HelperMethods.GetStringInput(HelperMethods.SECOND_NAME_MESSAGE);
-                    isValidName = HelperMethods.ValidateName(secondName);
-                }
-                else
-                {
-                    return "!";
-                }
-            }
-            return secondName;
-        }
-
-        private string GetPhoneNumber()
-        {
-            string phoneNumber = HelperMethods.GetStringInput(HelperMethods.PHONE_NUMBER_MESSAGE);
-            bool isValidPhoneNumber = HelperMethods.ValidatePhoneNumber(phoneNumber);
-            while (!isValidPhoneNumber)
-            {
-                Console.WriteLine("The phone number is invalid.\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                short _Option;
-                _Option = short.Parse(Console.ReadLine());
-                if (_Option == 1)
-                {
-                    phoneNumber = HelperMethods.GetStringInput(HelperMethods.PHONE_NUMBER_MESSAGE);
-                    isValidPhoneNumber = HelperMethods.ValidatePhoneNumber(phoneNumber);
-                }
-                else
-                {
-                    return "!";
-                }
-            }
-            return phoneNumber;
-        }
-
-        private string GetEmergancyNumber()
-        {
-            string phoneNumber = HelperMethods.GetStringInput(HelperMethods.EMERGENCY_NUMBER_MESSAGE);
-            bool isValidPhoneNumber = HelperMethods.ValidatePhoneNumber(phoneNumber);
-            while (!isValidPhoneNumber)
-            {
-                Console.WriteLine("The emergacny number is invalid.\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                short _Option;
-                _Option = short.Parse(Console.ReadLine());
-                if (_Option == 1)
-                {
-                    phoneNumber = HelperMethods.GetStringInput(HelperMethods.EMERGENCY_NUMBER_MESSAGE);
-                    isValidPhoneNumber = HelperMethods.ValidatePhoneNumber(phoneNumber);
-                }
-                else
-                {
-                    return "!";
-                }
-            }
-            return phoneNumber;
+            return input;
         }
 
         private string GetDateTime()
         {
-            string dateTimeInput = HelperMethods.GetStringInput(HelperMethods.DATE_TIME_MESSAGE);
+            // This method is responsable for getting an input in the form of a data [MM/DD/YYYY]
+
+            string dateTimeInput = HelperMethods.GetStringInput(HelperMethods.Message.DATE_TIME_MESSAGE);
             bool isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
             while (!isValidDateTime)
             {
-                Console.WriteLine("The date are invalid.\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                short _Option;
-                _Option = short.Parse(Console.ReadLine());
-                if (_Option == 1)
+                Console.WriteLine("The date are invalid.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char _Option;
+                _Option = char.Parse(Console.ReadLine());
+                if (_Option == '1')
                 {
                     // User chooses to try again
-                    dateTimeInput = HelperMethods.GetStringInput(HelperMethods.DATE_TIME_MESSAGE);
+                    dateTimeInput = HelperMethods.GetStringInput(HelperMethods.Message.DATE_TIME_MESSAGE);
                     isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
                 }
                 else
@@ -178,32 +95,24 @@ namespace Expedia
             }
 
             return dateTimeInput;
-        }
-
-        private bool checkIfContinue(string value)
-        {
-            return value != "!";
-        }
-
-        private bool checkIfContinue(int x)
-        {
-            return x != 3;
-        }
+        }      
 
         private int GetGender()
         {
-            string genderInput = HelperMethods.GetStringInput(HelperMethods.GENDER_MESSAGE);
+            // A method to find the gender of the user , male => 1 | female => 2 | user exit => 3
+
+            string genderInput = HelperMethods.GetStringInput(HelperMethods.Message.GENDER_MESSAGE);
             bool isValidGender = HelperMethods.ValidateGender(genderInput);
 
             // Loop to validate the gender input until it's valid
             while (!isValidGender)
             {
-                Console.WriteLine("Invalid gender input. Please enter 'M' or 'F'.\n" + HelperMethods.TRY_AGAIN_MESSAGE);
-                short _Option;
-                _Option = short.Parse(Console.ReadLine());
-                if (_Option == 1)
+                Console.WriteLine("Invalid gender input. Please enter 'M' or 'F'.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char _Option;
+                _Option = char.Parse(Console.ReadLine());
+                if (_Option == '1')
                 {
-                    genderInput = HelperMethods.GetStringInput(HelperMethods.GENDER_MESSAGE);
+                    genderInput = HelperMethods.GetStringInput(HelperMethods.Message.GENDER_MESSAGE);
                     isValidGender = HelperMethods.ValidateGender(genderInput);
                 }
                 else
@@ -217,46 +126,126 @@ namespace Expedia
             else return 0;
         }
 
-        static bool LogIn()
+        private string GetPassword()
         {
-            return true;
+
+            // Taking the password of the user , validating it , and encrypting and hashing it.
+
+            Console.WriteLine(HelperMethods.Message.PASSWORD_MESSAGE);
+            string password = HelperMethods.encryptedInput();
+
+
+            bool isValidPassword = HelperMethods.ValidatePassword(password);
+            if (!isValidPassword)
+            {
+                Console.WriteLine("The password is invalid.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char _Option = char.Parse(Console.ReadLine());
+                if (_Option == '1')
+                {
+                    return GetPassword(); 
+                }
+                else
+                {
+                    return "!";
+                }
+            }
+
+            string hashedPassword = HelperMethods.HashPassword(password); 
+
+
+            if (!HelperMethods.confirmationPassword(hashedPassword))
+            {
+                return "!";
+            }
+
+            return hashedPassword;
         }
-       
+
+        private bool LogIn()
+        {
+            string email = HelperMethods.GetStringInput(HelperMethods.Message.MAIL_MESSAGE);
+            Console.Write("Please enter your password: ");
+            string password = HelperMethods.encryptedInput();
+            password = HelperMethods.HashPassword(password);
+            bool validUserDate = UserExsit(email, password);
+            password = HelperMethods.HashPassword(password);
+
+            while (!validUserDate)
+            {
+                Console.WriteLine("Wrong Email or Password " + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                short _option = short.Parse(Console.ReadLine());
+                if(_option == 1)
+                {
+                    email = HelperMethods.GetStringInput(HelperMethods.Message.MAIL_MESSAGE);
+                    Console.Write("Please enter your password: ");
+                    password = HelperMethods.encryptedInput();
+                    password = HelperMethods.HashPassword(password);
+                    validUserDate = UserExsit(email, password);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
         private void SignUP()
         {
 
-            string email = GetEmail();
-            if (!checkIfContinue(email)) return;
+           string userEmail = GetValidatedInput(
+                                                HelperMethods.Message.MAIL_MESSAGE,
+                                                email => HelperMethods.ValidateEmail(email) && !_SystemUsers.Exists(u => u.Email == email),
+                                                "Invalid or duplicate email."
+                                                );
+            if (userEmail == "!") return;
 
-            string firstName = GetFirstName();
-            if(!checkIfContinue(firstName)) return;
 
-            string lastName = GetLastName();
-            if (!checkIfContinue(lastName)) return;
+            string firstName = GetValidatedInput(HelperMethods.Message.FIRST_NAME_MESSAGE , 
+                                                 firstname => HelperMethods.ValidateName(firstname) ,
+                                                 "The first name is invalid.\n"
+                                                 );
+            if(firstName == "!") return;
 
-            string phoneNumber = GetPhoneNumber();
-            if(!checkIfContinue(phoneNumber)) return;
+            string lastName = GetValidatedInput(HelperMethods.Message.SECOND_NAME_MESSAGE,
+                                                lastname => HelperMethods.ValidateName(lastname),
+                                                "The last name is invalid.\n"
+                                                );
+            if (lastName == "!") return;
 
-            string emergencyNumber = GetEmergancyNumber();
-            if (!checkIfContinue(emergencyNumber)) return;
+            string phoneNumber = GetValidatedInput(HelperMethods.Message.PHONE_NUMBER_MESSAGE,
+                                                   number => HelperMethods.ValidatePhoneNumber(number),
+                                                   "The phone number is invalid.\n"
+                                                );
+            if (phoneNumber == "!") return;
+
+            string emergencyNumber = GetValidatedInput(HelperMethods.Message.EMERGENCY_NUMBER_MESSAGE,
+                                                       number => HelperMethods.ValidatePhoneNumber(number),
+                                                       "The emergency number is invalid.\n"
+                                                    );
+            if (emergencyNumber == "!") return;
 
             string dateTimeStringVersion = GetDateTime();
-            if(!checkIfContinue(dateTimeStringVersion)) return;
+            if(dateTimeStringVersion == "!") return;
             DateTime birthDate = new DateTime();
             DateTime.TryParse(dateTimeStringVersion, out birthDate);
-            Console.WriteLine(birthDate);
-            Console.WriteLine(HelperMethods.DateTimeYearOnly(birthDate));
+          
 
             
             int gender = GetGender();
-            if (!checkIfContinue(gender)) return;
-            bool isMale = (gender == 1);
+            if (gender == 3) return;
+            bool isMale = (gender == 1); 
 
-
-            User newUser = new User(email , firstName , lastName , phoneNumber, emergencyNumber , birthDate , isMale , _SystemUsers.Count);
+            
+            string password = GetPassword();
+          
+            if (password == "!") return;
+            
+            User newUser = new User(userEmail, firstName , lastName , phoneNumber, emergencyNumber , birthDate , isMale , _SystemUsers.Count , password);
             _SystemUsers.Add(newUser);
-
-            UpdateUserDataBase();
+            
+            UpdateUserDataBase(); 
 
             return;
         }
@@ -284,7 +273,7 @@ namespace Expedia
                     if (_Option == 3) break;
                     if (_Option != 1 && _Option != 2)
                     {
-                        Console.WriteLine("Invalid Option\n" + HelperMethods.TRY_AGAIN_MESSAGE);
+                        Console.WriteLine("Invalid Option\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
                         short _NewOption;
                         _NewOption = short.Parse(Console.ReadLine());
                         if (_NewOption != 1) return;
@@ -297,7 +286,8 @@ namespace Expedia
 
                 if (_Option == 1)
                 {
-                    LogIn();
+                    if (LogIn())
+                        Console.WriteLine("I'M IIIIINNNNNNNNNNNNNNNNNNNNNN");
                 }
                 else if (_Option == 2)
                 {
