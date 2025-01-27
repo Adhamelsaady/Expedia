@@ -8,7 +8,7 @@ namespace Expedia
         string _email, _firstName, _LastName, _phoneNumber, _passportId, _emergencyContact, _password;
         DateTime _birthDate;
         bool _male;
-        long _systemId;
+        int _systemId;
         List<int> _relevantsIds;
 
         public string Email
@@ -16,7 +16,7 @@ namespace Expedia
             get { return _email; }
         }
 
-        public long ID
+        public int ID
         {
             get { return _systemId; }
         }
@@ -78,6 +78,7 @@ namespace Expedia
             if (male == true) return "Male";
             else return "Female";
         }
+
         public void ShowData()
         {
             Console.WriteLine(
@@ -88,6 +89,73 @@ namespace Expedia
                 $"Gender {gender(_male)}\n" +
                 $"Birth-Date {HelperMethods.DateTimeYearOnly(_birthDate)}"               
                 );
+        }
+
+        private void ChangePassword()
+        {
+            bool run = true;
+            while (run)
+            {
+                Console.Write("Enter your old password: ");
+                string OldPassword;
+                OldPassword = HelperMethods.encryptedInput();
+                if (this._password == HelperMethods.HashPassword(OldPassword))
+                {
+                    Console.WriteLine("Enter the new password : ");
+                    string password = HelperMethods.GetPassword();
+                    if (password != "!") this._password = password;
+                    run = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Password");
+                    Console.WriteLine(HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                    char option;
+                    option = char.Parse(Console.ReadLine());
+                    if (option != '1') run = false; 
+                }
+            }
+
+        }
+
+        private void ChangePhoneNumber()
+        {
+            string NewPhoneNumber = HelperMethods.GetValidatedInput(HelperMethods.Message.PHONE_NUMBER_MESSAGE,
+                                                  number => HelperMethods.ValidatePhoneNumber(number),
+                                                  "The phone number is invalid.\n"
+                                               );
+            if(NewPhoneNumber != "!")
+                this._phoneNumber = NewPhoneNumber;
+        }
+
+        private void ChangeEmergencyNumber()
+        {
+            string NewEmergencyNumber = HelperMethods.GetValidatedInput(HelperMethods.Message.EMERGENCY_NUMBER_MESSAGE,
+                                                       number => HelperMethods.ValidatePhoneNumber(number),
+                                                       "The emergency number is invalid.\n"
+                                                    );
+            if (NewEmergencyNumber == "!") 
+                this._emergencyContact = NewEmergencyNumber;
+        }
+
+        private void ModifyRelevants()
+        {
+
+        }
+
+
+        public void ModifyData()
+        {
+            Console.WriteLine("Enter number in range [1 - 4]: ");
+            Console.WriteLine(HelperMethods.Message.CHANGEDATAMESSGE);
+
+            int option;
+            option = int.Parse(Console.ReadLine());
+            if (option == 1) ChangePassword();
+            else if (option == 2) ChangePhoneNumber();
+            else if (option == 3) ChangeEmergencyNumber();
+            else if (option == 4) ModifyRelevants();
+            else return;
         }
 
     }

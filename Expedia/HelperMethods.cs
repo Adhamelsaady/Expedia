@@ -26,6 +26,12 @@ namespace Expedia
                 "- Between 8 and 30 letter\n" +
                 "- Should contain at least one uppercase letter , lowercase letter , digit , and special character  (!,@,$,#,%,$,&,*)\n" +
                 "Password: ";
+            public const string CHANGEDATAMESSGE = "" +
+                "1 - Change Password\n" +
+                "2 - Phone Number\n" +
+                "3 - Emergency Number\n" +
+                "4 - Add relevants\n"
+                ;
         }
 
         public static User DataToUser (string data)
@@ -193,6 +199,58 @@ namespace Expedia
                 string hash = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
                 return hash;
             }
+        }
+
+
+        public static string GetValidatedInput(string message, Func<string, bool> validate, string errorMessage)
+        {
+            // The method prompts the user for input, validates it using a provided validation function,
+            // and repeats the process until valid input is entered. 
+
+            string input = HelperMethods.GetStringInput(message);
+            while (!validate(input))
+            {
+                Console.WriteLine(errorMessage + "\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char option = char.Parse(Console.ReadLine());
+                if (option != '1') return "!";
+                input = HelperMethods.GetStringInput(message);
+            }
+            return input;
+        }
+
+        public static string GetPassword()
+        {
+
+            // Taking the password of the user , validating it , and encrypting and hashing it.
+
+            Console.WriteLine(HelperMethods.Message.PASSWORD_MESSAGE);
+            string password = HelperMethods.encryptedInput();
+
+
+            bool isValidPassword = HelperMethods.ValidatePassword(password);
+            if (!isValidPassword)
+            {
+                Console.WriteLine("The password is invalid.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char _Option = char.Parse(Console.ReadLine());
+                if (_Option == '1')
+                {
+                    return GetPassword();
+                }
+                else
+                {
+                    return "!";
+                }
+            }
+
+            string hashedPassword = HelperMethods.HashPassword(password);
+
+
+            if (!HelperMethods.confirmationPassword(hashedPassword))
+            {
+                return "!";
+            }
+
+            return hashedPassword;
         }
 
     }

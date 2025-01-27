@@ -27,7 +27,9 @@ namespace Expedia
             } 
             else if(option == 2)
             {
-
+                System.RemoveUser(CurrentUser);
+                CurrentUser.ModifyData();
+                System.AddUser(CurrentUser);
             }
             else
             {

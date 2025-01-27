@@ -9,7 +9,7 @@ namespace Expedia
 
         const string USERS_FILE_PATH = @"D:\Projects\Projects\C#\Expedia\Expedia\DataBase\Users.txt";
        
-        public List <User> ExpediaUsers = new List <User> ();
+        static private List <User> ExpediaUsers = new List <User> ();
         User CurrentUser;
 
 
@@ -26,7 +26,7 @@ namespace Expedia
             return false;
         }
 
-        void LoadUserDataBase()
+        static void LoadUserDataBase()
         {
             // This method loads the data in the file to the _SystemUsers list
 
@@ -42,7 +42,7 @@ namespace Expedia
             }
         }
 
-        void UpdateUserDataBase()
+        static void UpdateUserDataBase()
         {
             // This method add the data in the list to the file , after deleting all the data in the other file 
 
@@ -54,22 +54,7 @@ namespace Expedia
                 }
             }
         }
-
-        private string GetValidatedInput(string message, Func<string, bool> validate, string errorMessage)
-        {
-            // The method prompts the user for input, validates it using a provided validation function,
-            // and repeats the process until valid input is entered. 
-
-            string input = HelperMethods.GetStringInput(message);
-            while (!validate(input))
-            {
-                Console.WriteLine(errorMessage + "\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
-                char option = char.Parse(Console.ReadLine());
-                if (option != '1') return "!";
-                input = HelperMethods.GetStringInput(message);
-            }
-            return input;
-        }
+        
 
         private string GetDateTime()
         {
@@ -126,41 +111,6 @@ namespace Expedia
             else return 0;
         }
 
-        private string GetPassword()
-        {
-
-            // Taking the password of the user , validating it , and encrypting and hashing it.
-
-            Console.WriteLine(HelperMethods.Message.PASSWORD_MESSAGE);
-            string password = HelperMethods.encryptedInput();
-
-
-            bool isValidPassword = HelperMethods.ValidatePassword(password);
-            if (!isValidPassword)
-            {
-                Console.WriteLine("The password is invalid.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
-                char _Option = char.Parse(Console.ReadLine());
-                if (_Option == '1')
-                {
-                    return GetPassword(); 
-                }
-                else
-                {
-                    return "!";
-                }
-            }
-
-            string hashedPassword = HelperMethods.HashPassword(password); 
-
-
-            if (!HelperMethods.confirmationPassword(hashedPassword))
-            {
-                return "!";
-            }
-
-            return hashedPassword;
-        }
-
         private int GetId(string UserEmail)
         {
             int CurUser = 0;
@@ -211,7 +161,7 @@ namespace Expedia
         private void SignUP()
         {
 
-           string userEmail = GetValidatedInput(
+           string userEmail = HelperMethods.GetValidatedInput(
                                                 HelperMethods.Message.MAIL_MESSAGE,
                                                 email => HelperMethods.ValidateEmail(email) && !ExpediaUsers.Exists(u => u.Email == email),
                                                 "Invalid or duplicate email."
@@ -219,25 +169,25 @@ namespace Expedia
             if (userEmail == "!") return;
 
 
-            string firstName = GetValidatedInput(HelperMethods.Message.FIRST_NAME_MESSAGE , 
+            string firstName = HelperMethods.GetValidatedInput(HelperMethods.Message.FIRST_NAME_MESSAGE , 
                                                  firstname => HelperMethods.ValidateName(firstname) ,
                                                  "The first name is invalid.\n"
                                                  );
             if(firstName == "!") return;
 
-            string lastName = GetValidatedInput(HelperMethods.Message.SECOND_NAME_MESSAGE,
+            string lastName = HelperMethods.GetValidatedInput(HelperMethods.Message.SECOND_NAME_MESSAGE,
                                                 lastname => HelperMethods.ValidateName(lastname),
                                                 "The last name is invalid.\n"
                                                 );
             if (lastName == "!") return;
 
-            string phoneNumber = GetValidatedInput(HelperMethods.Message.PHONE_NUMBER_MESSAGE,
+            string phoneNumber = HelperMethods.GetValidatedInput(HelperMethods.Message.PHONE_NUMBER_MESSAGE,
                                                    number => HelperMethods.ValidatePhoneNumber(number),
                                                    "The phone number is invalid.\n"
                                                 );
             if (phoneNumber == "!") return;
 
-            string emergencyNumber = GetValidatedInput(HelperMethods.Message.EMERGENCY_NUMBER_MESSAGE,
+            string emergencyNumber = HelperMethods.GetValidatedInput(HelperMethods.Message.EMERGENCY_NUMBER_MESSAGE,
                                                        number => HelperMethods.ValidatePhoneNumber(number),
                                                        "The emergency number is invalid.\n"
                                                     );
@@ -255,13 +205,14 @@ namespace Expedia
             bool isMale = (gender == 1); 
 
             
-            string password = GetPassword();
+            string password = HelperMethods.GetPassword();
           
             if (password == "!") return;
             
             User newUser = new User(userEmail, firstName , lastName , phoneNumber, emergencyNumber , birthDate , isMale , ExpediaUsers.Count , password);
             ExpediaUsers.Add(newUser);
-            
+
+         
             UpdateUserDataBase(); 
 
             return;
@@ -273,7 +224,19 @@ namespace Expedia
             Session session = new Session(CurrentUser);
         }
 
+        static public void AddUser(User user)
+        {
+            var UserId = user.ID;
+            ExpediaUsers.Insert(UserId , user);
+            UpdateUserDataBase();
+                      
+        }
 
+        static public void RemoveUser(User user)
+        {
+            ExpediaUsers.Remove(user);
+            UpdateUserDataBase();               
+        }
         private void MainMenu()
         {
            
@@ -290,25 +253,25 @@ namespace Expedia
                              "3) Exit \n");
 
 
-                short _Option = -1;
-                while (_Option == -1)
+                char _Option = '0';
+                while (_Option == '0')
                 {
-                    _Option = short.Parse(Console.ReadLine());
-                    if (_Option == 3) break;
-                    if (_Option != 1 && _Option != 2)
+                    _Option = char.Parse(Console.ReadLine()); 
+                    if (_Option == '3') break;
+                    if (_Option != '1' && _Option != '2')
                     {
                         Console.WriteLine("Invalid Option\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
-                        short _NewOption;
-                        _NewOption = short.Parse(Console.ReadLine());
-                        if (_NewOption != 1) return;
-                        else _Option = -1;
+                        char _NewOption;
+                        _NewOption = char.Parse(Console.ReadLine());
+                        if (_NewOption != '1') return;
+                        else _Option = '0';
                     }
-                    if (_Option == -1)
+                    if (_Option == '0')
                         Console.Write("Try Again : ");
                 }
 
 
-                if (_Option == 1)
+                if (_Option == '1')
                 {
                     int user_id = LogIn();
                     if (user_id != -1)
@@ -316,7 +279,7 @@ namespace Expedia
                         EnterSystem(ExpediaUsers[user_id]);
                     }                  
                 }
-                else if (_Option == 2)
+                else if (_Option == '2')
                 {
                     SignUP();
                 }
