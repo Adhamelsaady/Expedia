@@ -7,16 +7,16 @@ namespace Expedia
     internal class System
     {
 
-        const string USERS_FILE_PATH = @"D:\Projects\Projects\C#\Expedia\DataBase\Users.txt";
+        const string USERS_FILE_PATH = @"D:\Projects\Projects\C#\Expedia\Expedia\DataBase\Users.txt";
        
-        public List <User> _SystemUsers = new List <User> ();
-
+        public List <User> ExpediaUsers = new List <User> ();
+        User CurrentUser;
 
 
         private bool UserExsit(string email , string password)
         {
             // iterating over the users and validating if any of them matches with the given email and password
-            foreach (User user in _SystemUsers)
+            foreach (User user in ExpediaUsers)
             {
                 if(user.isVaild(email, password))
                 {
@@ -30,14 +30,14 @@ namespace Expedia
         {
             // This method loads the data in the file to the _SystemUsers list
 
-            if(_SystemUsers.Count != 0)
-                _SystemUsers.Clear();
+            if(ExpediaUsers.Count != 0)
+                ExpediaUsers.Clear();
             using (StreamReader reader = new StreamReader(USERS_FILE_PATH))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    _SystemUsers.Add(HelperMethods.DataToUser(line));
+                    ExpediaUsers.Add(HelperMethods.DataToUser(line));
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace Expedia
 
             using (StreamWriter writer = new StreamWriter(USERS_FILE_PATH , false))
             {
-                foreach (var user in _SystemUsers)
+                foreach (var user in ExpediaUsers)
                 {
                     writer.WriteLine(user.data());
                 }
@@ -161,7 +161,21 @@ namespace Expedia
             return hashedPassword;
         }
 
-        private bool LogIn()
+        private int GetId(string UserEmail)
+        {
+            int CurUser = 0;
+            foreach (User user in ExpediaUsers)
+            {
+                if (user.Email == UserEmail)
+                {
+                    return CurUser;
+                }
+                CurUser++;
+            }
+            return CurUser;
+        }
+
+        private int LogIn()
         {
             string email = HelperMethods.GetStringInput(HelperMethods.Message.MAIL_MESSAGE);
             Console.Write("Please enter your password: ");
@@ -184,10 +198,13 @@ namespace Expedia
                 }
                 else
                 {
-                    return false;
+                    return -1;
                 }
             }
-            return true;
+
+            // Return the idoftheuser
+
+            return GetId(email);
 
         }
 
@@ -196,7 +213,7 @@ namespace Expedia
 
            string userEmail = GetValidatedInput(
                                                 HelperMethods.Message.MAIL_MESSAGE,
-                                                email => HelperMethods.ValidateEmail(email) && !_SystemUsers.Exists(u => u.Email == email),
+                                                email => HelperMethods.ValidateEmail(email) && !ExpediaUsers.Exists(u => u.Email == email),
                                                 "Invalid or duplicate email."
                                                 );
             if (userEmail == "!") return;
@@ -242,13 +259,20 @@ namespace Expedia
           
             if (password == "!") return;
             
-            User newUser = new User(userEmail, firstName , lastName , phoneNumber, emergencyNumber , birthDate , isMale , _SystemUsers.Count , password);
-            _SystemUsers.Add(newUser);
+            User newUser = new User(userEmail, firstName , lastName , phoneNumber, emergencyNumber , birthDate , isMale , ExpediaUsers.Count , password);
+            ExpediaUsers.Add(newUser);
             
             UpdateUserDataBase(); 
 
             return;
         }
+
+        private void EnterSystem(User user)
+        {
+            CurrentUser = user;
+            Session session = new Session(CurrentUser);
+        }
+
 
         private void MainMenu()
         {
@@ -286,8 +310,11 @@ namespace Expedia
 
                 if (_Option == 1)
                 {
-                    if (LogIn())
-                        Console.WriteLine("I'M IIIIINNNNNNNNNNNNNNNNNNNNNN");
+                    int user_id = LogIn();
+                    if (user_id != -1)
+                    {
+                        EnterSystem(ExpediaUsers[user_id]);
+                    }                  
                 }
                 else if (_Option == 2)
                 {

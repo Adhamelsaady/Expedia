@@ -40,7 +40,7 @@ namespace Expedia
                 parts[4], // Phone Number
                 parts[5], // Emergency Number
                 DateTime.Parse(parts[6]), // BirthDate
-                parts[7] == "true"? true : false,
+                parts[7] == "True"? true : false,
                 int.Parse(parts[0]), // SystemId
                 parts[8]
             );
