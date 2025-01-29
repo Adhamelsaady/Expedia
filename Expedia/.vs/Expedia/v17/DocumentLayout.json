@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|d:\\projects\\projects\\c#\\expedia\\expedia\\system.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:system.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\helpermethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:helpermethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,16 +19,12 @@
       "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:session.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|d:\\projects\\projects\\c#\\expedia\\expedia\\flightsapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:flightsapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|d:\\projects\\projects\\c#\\expedia\\expedia\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\system.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:system.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8FBD25FB-D363-47F6-AD9B-DDE014F0709B}|Expedia.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,20 +34,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\User.cs",
-              "RelativeDocumentMoniker": "User.cs",
-              "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\User.cs",
-              "RelativeToolTip": "User.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAAAUwGQAAAA9AAAA",
+              "DocumentIndex": 3,
+              "Title": "Session.cs",
+              "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\Session.cs",
+              "RelativeDocumentMoniker": "Session.cs",
+              "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\Session.cs",
+              "RelativeToolTip": "Session.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAowCoAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-25T15:12:29.676Z",
-              "IsPinned": true,
+              "WhenOpened": "2025-01-25T15:26:18.161Z",
               "EditorCaption": ""
             },
             {
@@ -52,13 +55,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
+              "Title": "FlightsAPI.cs",
+              "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\FlightsAPI.cs",
+              "RelativeDocumentMoniker": "FlightsAPI.cs",
+              "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\FlightsAPI.cs",
+              "RelativeToolTip": "FlightsAPI.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAxwAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-29T18:28:56.631Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\User.cs",
+              "RelativeDocumentMoniker": "User.cs",
+              "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\User.cs",
+              "RelativeToolTip": "User.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAcwEYAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-29T18:20:03.61Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "HelperMethods.cs",
               "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\HelperMethods.cs",
               "RelativeDocumentMoniker": "HelperMethods.cs",
               "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\HelperMethods.cs",
               "RelativeToolTip": "HelperMethods.cs",
-              "ViewState": "AQIAAFYAAAAAAAAAAAArwHYAAAAdAAAA",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAUwDQAAABXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-25T15:12:30.488Z",
               "EditorCaption": ""
@@ -66,38 +95,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Session.cs",
-              "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\Session.cs",
-              "RelativeDocumentMoniker": "Session.cs",
-              "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\Session.cs",
-              "RelativeToolTip": "Session.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAB8AAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-25T15:26:18.161Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "System.cs",
               "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\System.cs",
               "RelativeDocumentMoniker": "System.cs",
               "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\System.cs",
               "RelativeToolTip": "System.cs",
-              "ViewState": "AQIAALYAAAAAAAAAAAAqwM8AAAAtAAAA",
+              "ViewState": "AQIAAMYAAAAAAAAAAAAAwH8AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-10T10:00:48.523Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\Projects\\Projects\\C#\\Expedia\\Expedia\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-10T10:00:36.745Z",
               "EditorCaption": ""

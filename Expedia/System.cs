@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.IO;
+using System.Linq;
 namespace Expedia
 {
     internal class System
@@ -10,21 +11,6 @@ namespace Expedia
         const string USERS_FILE_PATH = @"D:\Projects\Projects\C#\Expedia\Expedia\DataBase\Users.txt";
        
         static private List <User> ExpediaUsers = new List <User> ();
-        User CurrentUser;
-
-
-        private bool UserExsit(string email , string password)
-        {
-            // iterating over the users and validating if any of them matches with the given email and password
-            foreach (User user in ExpediaUsers)
-            {
-                if(user.isVaild(email, password))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         static void LoadUserDataBase()
         {
@@ -37,7 +23,7 @@ namespace Expedia
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    ExpediaUsers.Add(HelperMethods.DataToUser(line));
+                    ExpediaUsers.Add(HelperMethods.ConvertDataToUser(line));
                 }
             }
         }
@@ -54,7 +40,6 @@ namespace Expedia
                 }
             }
         }
-        
 
         private string GetDateTime()
         {
@@ -111,28 +96,13 @@ namespace Expedia
             else return 0;
         }
 
-        private int GetId(string UserEmail)
-        {
-            int CurUser = 0;
-            foreach (User user in ExpediaUsers)
-            {
-                if (user.Email == UserEmail)
-                {
-                    return CurUser;
-                }
-                CurUser++;
-            }
-            return CurUser;
-        }
-
         private int LogIn()
         {
             string email = HelperMethods.GetStringInput(HelperMethods.Message.MAIL_MESSAGE);
             Console.Write("Please enter your password: ");
             string password = HelperMethods.encryptedInput();
             password = HelperMethods.HashPassword(password);
-            bool validUserDate = UserExsit(email, password);
-            password = HelperMethods.HashPassword(password);
+            bool validUserDate = ExpediaUsers.Any(user => user.ValidEmailAndPassword(email, password));
 
             while (!validUserDate)
             {
@@ -144,7 +114,7 @@ namespace Expedia
                     Console.Write("Please enter your password: ");
                     password = HelperMethods.encryptedInput();
                     password = HelperMethods.HashPassword(password);
-                    validUserDate = UserExsit(email, password);
+                    validUserDate = ExpediaUsers.Any(user => user.ValidEmailAndPassword(email, password));
                 }
                 else
                 {
@@ -152,10 +122,9 @@ namespace Expedia
                 }
             }
 
-            // Return the idoftheuser
+            // Return the id oftheuser
 
-            return GetId(email);
-
+            return ExpediaUsers.FindIndex(user => user.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
         }
 
         private void SignUP()
@@ -220,8 +189,7 @@ namespace Expedia
 
         private void EnterSystem(User user)
         {
-            CurrentUser = user;
-            Session session = new Session(CurrentUser);
+            Session session = new Session(user);
         }
 
         static public void AddUser(User user)

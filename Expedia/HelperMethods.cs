@@ -29,12 +29,10 @@ namespace Expedia
             public const string CHANGEDATAMESSGE = "" +
                 "1 - Change Password\n" +
                 "2 - Phone Number\n" +
-                "3 - Emergency Number\n" +
-                "4 - Add relevants\n"
-                ;
+                "3 - Emergency Number\n";
         }
 
-        public static User DataToUser (string data)
+        public static User ConvertDataToUser (string data)
         {
             string[] parts = data.Split('|');
             // Create a new User object and assign values from the parts
@@ -48,9 +46,11 @@ namespace Expedia
                 DateTime.Parse(parts[6]), // BirthDate
                 parts[7] == "True"? true : false,
                 int.Parse(parts[0]), // SystemId
-                parts[8]
+                parts[8] // password
             );
 
+            Console.WriteLine(parts.Length);
+            for (int i = 9; i < parts.Length; ++i) user.AddFlight(int.Parse(parts[i]));
             return user;
         }
 

@@ -8,7 +8,7 @@ namespace Expedia
 {
     internal class Session
     {
-        User CurrentUser;
+        User CurrentUser = new User();
         public Session(User CurrentUser) 
         { 
             this.CurrentUser = CurrentUser;
@@ -40,7 +40,6 @@ namespace Expedia
 
         private void MainMenu() 
         {
-            Console.WriteLine($"Welcome To Expedia , {CurrentUser.FirstName}");
             Console.WriteLine("Choose one of the following options: ");
             Console.WriteLine("1 : View Profile");
             Console.WriteLine("2 : Book a flight");
@@ -49,7 +48,7 @@ namespace Expedia
         private void StartTheSession()
         {
             bool run = true;
-            
+            Console.WriteLine($"Welcome To Expedia , {CurrentUser.FirstName}");
             while (run)
             {
                 MainMenu();
@@ -77,7 +76,7 @@ namespace Expedia
                 }
                 else if (_Option == 2)
                 {
-                    Console.WriteLine("This is the flights HAHAHAHAHA");
+                    CurrentUser.MyFlightsHistory();
                 }
                 else
                 {

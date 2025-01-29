@@ -9,7 +9,7 @@ namespace Expedia
         DateTime _birthDate;
         bool _male;
         int _systemId;
-        List<int> _relevantsIds;
+        List<int> _FlightsID;
 
         public string Email
         {
@@ -41,6 +41,7 @@ namespace Expedia
             _male = male;
             _systemId = systemID;
             _password = password;
+            _FlightsID = new List<int>();
         }
 
         public string data()
@@ -63,12 +64,15 @@ namespace Expedia
             Data += _male;
             Data += '|';
             Data += _password;
-
+            foreach (int FilghtIndex in _FlightsID)
+            {
+                Data += FilghtIndex.ToString();
+                Data += "|";
+            }
             return Data;
         }
 
-
-        public bool isVaild(string email, string password)
+        public bool ValidEmailAndPassword(string email, string password)
         {
             return email == _email && password == _password;
         }
@@ -91,6 +95,15 @@ namespace Expedia
                 );
         }
 
+        public void AddFlight(int FlightId)
+        {
+            _FlightsID.Add(FlightId);
+        }
+
+        public void MyFlightsHistory()
+        {
+            foreach (var flight in _FlightsID) Console.WriteLine(flight);
+        }
         private void ChangePassword()
         {
             bool run = true;
