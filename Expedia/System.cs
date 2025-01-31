@@ -41,32 +41,6 @@ namespace Expedia
             }
         }
 
-        private string GetDateTime()
-        {
-            // This method is responsable for getting an input in the form of a data [MM/DD/YYYY]
-
-            string dateTimeInput = HelperMethods.GetStringInput(HelperMethods.Message.DATE_TIME_MESSAGE);
-            bool isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
-            while (!isValidDateTime)
-            {
-                Console.WriteLine("The date are invalid.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
-                char _Option;
-                _Option = char.Parse(Console.ReadLine());
-                if (_Option == '1')
-                {
-                    // User chooses to try again
-                    dateTimeInput = HelperMethods.GetStringInput(HelperMethods.Message.DATE_TIME_MESSAGE);
-                    isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
-                }
-                else
-                {
-                    return "!";
-                }
-            }
-
-            return dateTimeInput;
-        }      
-
         private int GetGender()
         {
             // A method to find the gender of the user , male => 1 | female => 2 | user exit => 3
@@ -162,7 +136,7 @@ namespace Expedia
                                                     );
             if (emergencyNumber == "!") return;
 
-            string dateTimeStringVersion = GetDateTime();
+            string dateTimeStringVersion = HelperMethods.GetDateTime();
             if(dateTimeStringVersion == "!") return;
             DateTime birthDate = new DateTime();
             DateTime.TryParse(dateTimeStringVersion, out birthDate);
@@ -205,6 +179,7 @@ namespace Expedia
             ExpediaUsers.Remove(user);
             UpdateUserDataBase();               
         }
+
         private void MainMenu()
         {
            

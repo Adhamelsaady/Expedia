@@ -9,8 +9,6 @@ namespace Expedia
 {
     internal class HelperMethods
     {
-
-
         public static class Message
         {
             public const string MAIL_MESSAGE = "Enter your Email : ";
@@ -30,6 +28,130 @@ namespace Expedia
                 "1 - Change Password\n" +
                 "2 - Phone Number\n" +
                 "3 - Emergency Number\n";
+        }
+
+        public enum Country
+        {
+            USA = 0, UK = 1, China = 2, Japan = 3, UAE = 4, Germany = 5, France = 6, India = 7, Australia = 8,
+            Canada = 9, Brazil = 10, SouthKorea = 11, Russia = 12, Singapore = 13, Turkey = 14, Thailand = 15,
+            Netherlands = 16, HongKong = 17, Qatar = 18, SouthAfrica = 19, Egypt = 20
+        }
+
+        public enum MajorAirports
+        {
+            // USA
+            ATL_HartsfieldJacksonAtlanta, LAX_LosAngeles, ORD_ChicagoOHare,
+
+            // UK
+            LHR_LondonHeathrow, LGW_LondonGatwick, MAN_Manchester,
+
+            // China
+            PEK_BeijingCapital, PVG_ShanghaiPudong, CAN_GuangzhouBaiyun,
+
+            // Japan
+            HND_TokyoHaneda, NRT_TokyoNarita, KIX_KansaiInternational,
+
+            // UAE
+            DXB_DubaiInternational, AUH_AbuDhabiInternational,
+
+            // Germany
+            FRA_Frankfurt, MUC_Munich, BER_BerlinBrandenburg,
+
+            // France
+            CDG_ParisCharlesDeGaulle, ORY_ParisOrly, NCE_NiceCoteDAzur,
+
+            // India
+            DEL_IndiraGandhi, BOM_ChhatrapatiShivaji, BLR_Kempegowda,
+
+            // Australia
+            SYD_Sydney, MEL_Melbourne, BNE_Brisbane,
+
+            // Canada
+            YYZ_TorontoPearson, YVR_Vancouver, YUL_MontrealTrudeau, YYC_CalgaryInternational,
+
+            // Brazil
+            GRU_SaoPauloGuarulhos, GIG_RioDeJaneiroGaleao, BSB_Brasilia,
+
+            // South Korea
+            ICN_Incheon, GMP_Gimpo, CJU_Jeju,
+
+            // Russia
+            SVO_Sheremetyevo, DME_Domodedovo, LED_Pulkovo,
+
+            // Singapore
+            SIN_Changi,
+
+            // Turkey
+            IST_Istanbul, SAW_SabihaGokcen,
+
+            // Thailand
+            BKK_BangkokSuvarnabhumi, DMK_DonMueang,
+
+            // Netherlands
+            AMS_AmsterdamSchiphol,
+
+            // Hong Kong
+            HKG_HongKongInternational,
+
+            // Qatar
+            DOH_HamadInternational,
+
+            // South Africa
+            JNB_ORTambo, CPT_CapeTownInternational,
+
+            // Egypt
+            CAI_CairoInternational, HRG_HurghadaInternational, SSH_SharmElSheikh
+        }
+
+        private static readonly Dictionary<Country, MajorAirports[]> airportsByCountry = new Dictionary<Country, MajorAirports[]>()
+        {
+            { Country.USA, new[] { MajorAirports.ATL_HartsfieldJacksonAtlanta, MajorAirports.LAX_LosAngeles, MajorAirports.ORD_ChicagoOHare } },
+            { Country.UK, new[] { MajorAirports.LHR_LondonHeathrow, MajorAirports.LGW_LondonGatwick, MajorAirports.MAN_Manchester } },
+            { Country.China, new[] { MajorAirports.PEK_BeijingCapital, MajorAirports.PVG_ShanghaiPudong, MajorAirports.CAN_GuangzhouBaiyun } },
+            { Country.Japan, new[] { MajorAirports.HND_TokyoHaneda, MajorAirports.NRT_TokyoNarita, MajorAirports.KIX_KansaiInternational } },
+            { Country.UAE, new[] { MajorAirports.DXB_DubaiInternational, MajorAirports.AUH_AbuDhabiInternational } },
+            { Country.Germany, new[] { MajorAirports.FRA_Frankfurt, MajorAirports.MUC_Munich, MajorAirports.BER_BerlinBrandenburg } },
+            { Country.France, new[] { MajorAirports.CDG_ParisCharlesDeGaulle, MajorAirports.ORY_ParisOrly, MajorAirports.NCE_NiceCoteDAzur } },
+            { Country.India, new[] { MajorAirports.DEL_IndiraGandhi, MajorAirports.BOM_ChhatrapatiShivaji, MajorAirports.BLR_Kempegowda } },
+            { Country.Australia, new[] { MajorAirports.SYD_Sydney, MajorAirports.MEL_Melbourne, MajorAirports.BNE_Brisbane } },
+            { Country.Canada, new[] { MajorAirports.YYZ_TorontoPearson, MajorAirports.YVR_Vancouver, MajorAirports.YUL_MontrealTrudeau, MajorAirports.YYC_CalgaryInternational } },
+            { Country.Brazil, new[] { MajorAirports.GRU_SaoPauloGuarulhos, MajorAirports.GIG_RioDeJaneiroGaleao, MajorAirports.BSB_Brasilia } },
+            { Country.SouthKorea, new[] { MajorAirports.ICN_Incheon, MajorAirports.GMP_Gimpo, MajorAirports.CJU_Jeju } },
+            { Country.Russia, new[] { MajorAirports.SVO_Sheremetyevo, MajorAirports.DME_Domodedovo, MajorAirports.LED_Pulkovo } },
+            { Country.Singapore, new[] { MajorAirports.SIN_Changi } },
+            { Country.Turkey, new[] { MajorAirports.IST_Istanbul, MajorAirports.SAW_SabihaGokcen } },
+            { Country.Thailand, new[] { MajorAirports.BKK_BangkokSuvarnabhumi, MajorAirports.DMK_DonMueang } },
+            { Country.Netherlands, new[] { MajorAirports.AMS_AmsterdamSchiphol } },
+            { Country.HongKong, new[] { MajorAirports.HKG_HongKongInternational } },
+            { Country.Qatar, new[] { MajorAirports.DOH_HamadInternational } },
+            { Country.SouthAfrica, new[] { MajorAirports.JNB_ORTambo, MajorAirports.CPT_CapeTownInternational } },
+            { Country.Egypt, new[] { MajorAirports.CAI_CairoInternational, MajorAirports.HRG_HurghadaInternational, MajorAirports.SSH_SharmElSheikh } }
+        };
+
+        public static string GetDateTime()
+        {
+            // This method is responsable for getting an input in the form of a data [MM/DD/YYYY]
+
+            string dateTimeInput = HelperMethods.GetStringInput(HelperMethods.Message.DATE_TIME_MESSAGE);
+            bool isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
+            while (!isValidDateTime)
+            {
+                Console.WriteLine("The date are invalid.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char _Option;
+                _Option = char.Parse(Console.ReadLine());
+                if (_Option == '1')
+                {
+                    // User chooses to try again
+                    dateTimeInput = HelperMethods.GetStringInput(HelperMethods.Message.DATE_TIME_MESSAGE);
+                    isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
+                }
+                else
+                {
+                    return "!";
+                }
+            }
+
+            return dateTimeInput;
         }
 
         public static User ConvertDataToUser (string data)
@@ -83,7 +205,7 @@ namespace Expedia
         public static bool ValidateDateAndTime(string DateAndTime)
         {
             DateTime dateTime = new DateTime();
-            return DateTime.TryParse(DateAndTime, out dateTime) && dateTime < DateTime.Now;
+            return DateTime.TryParse(DateAndTime, out dateTime);
 
         }
 
@@ -201,7 +323,6 @@ namespace Expedia
             }
         }
 
-
         public static string GetValidatedInput(string message, Func<string, bool> validate, string errorMessage)
         {
             // The method prompts the user for input, validates it using a provided validation function,
@@ -251,6 +372,89 @@ namespace Expedia
             }
 
             return hashedPassword;
+        }
+
+        private static void Printcountries()
+        {
+            foreach (var country in Enum.GetValues(typeof (Country)))
+            {
+                Console.WriteLine($"{(int)country + 1} - {country.ToString()}.");
+            }
+        }
+        
+        private static void PrintAirPorts(Country country)
+        {
+            var CountyAirPorts = airportsByCountry[country];
+            for (int i = 0; i < CountyAirPorts.Length; ++i)
+            {
+                Console.WriteLine($"{i + 1} - {CountyAirPorts[i].ToString()}");
+            }
+        }
+
+        public static string GetAirPort(string direction)
+        {
+            Console.WriteLine($"Enter the number of the country you are traveling {direction} : ");
+            Printcountries();
+            int option;
+            option = int.Parse(Console.ReadLine());
+            if(option > 21)  return "!"; // invalid option
+
+            Console.WriteLine($"Enter the Airport you are traveling {direction}");
+            var country = (Country)Enum.ToObject(typeof (Country) , --option);
+            PrintAirPorts(country);
+
+            option = int.Parse(Console.ReadLine());
+            if (option > airportsByCountry[country].Length) return "!"; // invalid option
+            string AirPort = airportsByCountry[country][--option].ToString();
+            return AirPort;
+        }
+
+        public static DateTime GetFlightDate()
+        {
+            // This method is responsable for getting an input in the form of a data [MM/DD/YYYY]
+            DateTime FlightDate = new DateTime(1 , 1 , 1);
+            string message = "Enter the starting range of the date of the flight in the form of  [MM/DD/YYYY]:";
+            string dateTimeInput = HelperMethods.GetStringInput(message);
+            bool isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
+            if (isValidDateTime)
+            {
+                string[] DateParsing = dateTimeInput.Split('/');
+                int month = int.Parse(DateParsing[0]);
+                int day = int.Parse(DateParsing[1]);
+                int year = int.Parse(DateParsing[2]);
+                FlightDate = new DateTime(year , month , day);
+                Console.WriteLine("We are here");
+            }
+            while (!isValidDateTime)
+            {
+                Console.WriteLine("The date are invalid.\n" + HelperMethods.Message.TRY_AGAIN_MESSAGE);
+                char _Option;
+                _Option = char.Parse(Console.ReadLine());
+                if (_Option == '1')
+                {
+
+                    dateTimeInput = HelperMethods.GetStringInput(message);
+                    isValidDateTime = HelperMethods.ValidateDateAndTime(dateTimeInput);
+                    string[] DateParsing = dateTimeInput.Split('/');
+                    int month = int.Parse(DateParsing[0]);
+                    int day = int.Parse(DateParsing[1]);
+                    int year = int.Parse(DateParsing[2]);
+                    FlightDate = new DateTime(year , month , day);
+                }
+                else
+                {
+                    return FlightDate;
+                }
+            }
+
+            return FlightDate;
+        }
+
+        public static DateTime StringToDate(string Date)
+        {
+            string[] parse = Date.Split('/');
+            DateTime ret = new DateTime(int.Parse(parse[2]), int.Parse(parse[0]), int.Parse(parse[1]));
+            return ret;
         }
 
     }

@@ -8,7 +8,7 @@ namespace Expedia
 {
     internal class Session
     {
-        User CurrentUser = new User();
+        User CurrentUser;
         public Session(User CurrentUser) 
         { 
             this.CurrentUser = CurrentUser;
@@ -45,6 +45,38 @@ namespace Expedia
             Console.WriteLine("2 : Book a flight");
             Console.WriteLine("3 : Log out");
         }
+
+        private void GetFlightSpecefications()
+        {
+            string From = HelperMethods.GetAirPort("from");
+            if (From == "!") return;
+
+            string To = HelperMethods.GetAirPort("to");
+            if (To == "!") return;
+
+            DateTime DefultDateTime = new DateTime(1, 1, 1);
+            DateTime StartingDate = HelperMethods.GetFlightDate();
+            if (StartingDate == DefultDateTime) return;
+
+            DateTime EndingDate = HelperMethods.GetFlightDate();
+            if (StartingDate == DefultDateTime) return;
+
+            double FromPrice = double.Parse(Console.ReadLine());
+            double ToPrice = double.Parse(Console.ReadLine());
+
+            FlightsAPI.FlightsSearch(From , To , StartingDate , EndingDate , FromPrice , ToPrice);
+
+        }
+
+        private void BookFlight()
+        {
+            GetFlightSpecefications();
+            Console.WriteLine("Enter the flight ID you want to book :");
+            int FlightID = int.Parse(Console.ReadLine());
+
+            // Book Flight for the user
+        }
+
         private void StartTheSession()
         {
             bool run = true;
@@ -76,7 +108,7 @@ namespace Expedia
                 }
                 else if (_Option == 2)
                 {
-                    CurrentUser.MyFlightsHistory();
+                    BookFlight();
                 }
                 else
                 {

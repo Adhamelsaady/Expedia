@@ -1,0 +1,16 @@
+0|LAX_LosAngeles|LHR_LondonHeathrow|750|Delta Airlines|12/15/2023|120|50
+1|CDG_ParisCharlesDeGaulle|JFK_JohnFKennedy|600|Air France|11/20/2023|85|40
+2|DXB_DubaiInternational|SIN_Changi|900|Emirates|10/25/2023|200|75
+3|HND_TokyoHaneda|ICN_Incheon|300|ANA|09/30/2023|150|25
+4|SYD_Sydney|LAX_LosAngeles|1200|Qantas|12/10/2023|90|100
+5|FRA_Frankfurt|ORD_ChicagoOHare|850|Lufthansa|11/05/2023|110|60
+6|PEK_BeijingCapital|HKG_HongKongInternational|250|Air China|10/15/2023|180|20
+7|YYZ_TorontoPearson|LGW_LondonGatwick|700|Air Canada|12/01/2023|95|55
+8|GRU_SaoPauloGuarulhos|MAD_MadridBarajas|950|LATAM|11/15/2023|70|80
+9|AMS_AmsterdamSchiphol|BKK_BangkokSuvarnabhumi|800|KLM|10/10/2023|130|65
+10|ATL_HartsfieldJacksonAtlanta|NRT_TokyoNarita|1100|Delta Airlines|12/20/2023|100|90
+11|LHR_LondonHeathrow|JFK_JohnFKennedy|850|British Airways|11/25/2023|95|70
+12|PVG_ShanghaiPudong|SFO_SanFrancisco|950|China Eastern|10/30/2023|140|60
+13|MUC_Munich|DXB_DubaiInternational|700|Lufthansa|12/05/2023|80|50
+14|DEL_IndiraGandhi|LHR_LondonHeathrow|800|Air India|11/10/2023|110|65
+15|IST_Istanbul|JFK_JohnFKennedy|900|Turkish Airlines|10/20/2023|120|75

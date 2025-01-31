@@ -104,6 +104,7 @@ namespace Expedia
         {
             foreach (var flight in _FlightsID) Console.WriteLine(flight);
         }
+
         private void ChangePassword()
         {
             bool run = true;
@@ -151,12 +152,6 @@ namespace Expedia
                 this._emergencyContact = NewEmergencyNumber;
         }
 
-        private void ModifyRelevants()
-        {
-
-        }
-
-
         public void ModifyData()
         {
             Console.WriteLine("Enter number in range [1 - 4]: ");
@@ -167,7 +162,6 @@ namespace Expedia
             if (option == 1) ChangePassword();
             else if (option == 2) ChangePhoneNumber();
             else if (option == 3) ChangeEmergencyNumber();
-            else if (option == 4) ModifyRelevants();
             else return;
         }
 
